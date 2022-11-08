@@ -1,0 +1,14 @@
+{
+    "name": "server",
+    "description": "an inventory management system",
+    "author": "Gordon Ng <s1250198@live.hkmu.edu.hk>",
+    "version": "0.0.1",
+    "dependencies": {
+    "express": "*"
+    },
+    "engine": "*",
+    "scripts": {
+    "start": "node server"
+    }
+    }
+    
