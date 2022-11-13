@@ -1,7 +1,7 @@
 {
     "name": "server",
     "description": "an inventory management system",
-    "author": "Gordon Ng <s1250198@live.hkmu.edu.hk>,Fung Long <s12534500@live.hkmu.edu.hk>,Chak chun Yin",
+    "author": "Gordon Ng <s1250198@live.hkmu.edu.hk>,Fung Long <s12534500@live.hkmu.edu.hk>,Chak chun Yin <s12561494@live.hkmu.edu.hk>",
     "version": "0.0.1",
     "dependencies": {
     "express": "*"
