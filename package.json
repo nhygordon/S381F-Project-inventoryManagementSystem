@@ -4,7 +4,15 @@
     "author": "Gordon Ng <s1250198@live.hkmu.edu.hk>,Fung Long <s12534500@live.hkmu.edu.hk>,Chak chun Yin <s12561494@live.hkmu.edu.hk>",
     "version": "0.0.1",
     "dependencies": {
-        "express": "*"
+        "cookie-session": "^1.4.0",
+        "body-parser": "^1.18.3",
+        "ejs": "2.6.1",
+        "express": "^4.17.1",
+        "express-formidable": "^1.2.0",
+        "fs": "0.0.1-security",
+        "html": "^1.0.0",
+        "mongodb": "^3.6.3",
+        "assert": "^1.4.1"
     },
     "engine": "*",
     "scripts": {
