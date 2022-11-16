@@ -9,7 +9,7 @@ const formidable = require('express-formidable');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
 
-const mongourl = 'mongodb+srv://henry:henry@cluster0.fr7dt.gcp.mongodb.net/test?retryWrites=true&w=majority'; 
+const mongourl = 'mongodb+srv://Fl:123456abcd!@cluster0.e7oruyd.mongodb.net/?retryWrites=true&w=majority'; 
 const dbName = 'test';
 
 const express = require('express');
