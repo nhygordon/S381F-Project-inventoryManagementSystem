@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>inventory</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script>
+        function goBack() { window.history.back();}
+        </script>
+        <style>
+            img {
+              max-width: 100%;
+              height: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="jumbotron text-center">
+            <h1>Details of <%= inventory.name %></h1>
+        </div>
+        <div class="container-fluid">
+            <div class="well">
+            <div class="row">
+                <% if (inventory.photo) { %>
+                    <img src="data:image/<%= inventory.photo.mimetype %>;base64, <%= inventory.photo.data %>"><br>
+                <% } %>
+            </div>
+            <div class="row">
+                    <p>Type:  <% if (typeof (inventory.inv_type) !== "undefined") { %><%= inventory.inv_type %><% } %></p><br>
+                    <p>Quantity:  <% if (typeof (inventory.quantity) !== "undefined") { %><%= inventory.quantity %><% } %></p><br>
+                    <p>Street:  <% if (typeof (inventory.address.street) !== "undefined") { %><%= inventory.address.street %><% } %></p><br>
+                    <p>Building:  <% if (typeof (inventory.address.building) !== "undefined") { %><%= inventory.address.building %><% } %></p><br>
+                    <p>Country:  <% if (typeof (inventory.address.country) !== "undefined") { %><%= inventory.address.country %><% } %></p><br>
+                    <p>Zipcode:  <% if (typeof (inventory.address.zipcode) !== "undefined") { %><%= inventory.address.zipcode %><% } %></p><br>
+                    <p>GPS:  <% if (typeof (inventory.address.coord) !== "undefined") { %>[<%= inventory.address.coord %>]<% } %></p><br>
+
+    
+                <p>Manager: <%= inventory.owner %></p><br>
+                
+                <% if (inventory.address.coord) { %>
+                    <a href="/map?lat=<%= inventory.address.coord[0] %>&lon=<%= inventory.address.coord[1] %>" class="btn btn-info" role="button">Map</a>
+                <% } %>
+            </div>
+            </div>
+            <div class="row ml-md-auto">
+
+                <a href="/edit?_id=<%= inventory._id %>" class="btn btn-primary" role="button">Edit</a>
+                <a href="/delete?_id=<%= inventory._id %>&owner=<%= inventory.owner %>" class="btn btn-primary" role="button">Delete</a>
+                
+                <button class="btn btn-primary" onclick="goBack()">Back</button>
+            </div>
+            <br>
+            
+            <p>end ;)</p>
+        </div>
+    </body>
+</html>
