@@ -106,7 +106,7 @@ const handle_Find = (req, res, criteria) =>{
         findDocument(db, {}, (docs)=>{
             client.close();
             console.log("Closed DB connection.");
-            res.status(200).render('home', {name: `${req.session.userid}`, ninventory: docs.length, Library: docs});
+            res.status(200).render('home', {name: `${req.session.userid}`, num_book: docs.length, Library: docs});
         });
     });
 }
@@ -136,15 +136,15 @@ const handle_Delete = (res, criteria) =>{
 
         let DOCID = {};
         DOCID['_id'] = ObjectID(criteria._id);
-        DOCID['owner'] = criteria.owner;
+        DOCID['creater'] = criteria.creater;
         deleteDocument(db, DOCID, (results)=>{
             client.close();
             console.log("Closed DB connection");
-            res.status(200).render('info', {message: "Document successfully deleted."});
+            res.status(200).render('info', {message: "Book Data successfully deleted."});
         })     
     });
     client.close();
-    res.status(200).render('info', {message: "Document successfully deleted."});
+    res.status(200).render('info', {message: "Book Data successfully deleted."});
 }
 //handling requests
 app.get('/', (req, res)=>{
@@ -200,7 +200,7 @@ app.get('/home', (req, res)=>{
         findDocument(db, {}, (docs)=>{
             client.close();
             console.log("Closed DB connection.");
-            res.status(200).render('home', {name: `${req.session.userid}`, ninventory: docs.length, Library: docs});
+            res.status(200).render('home', {name: `${req.session.userid}`, num_book: docs.length, Library: docs});
         });
     });
     //res.status(200).render('home', {name: `${req.session.userid}`});
@@ -223,7 +223,7 @@ app.get('/create', (req, res)=>{
     res.status(200).render("create");
 });
 app.post('/create', (req, res)=>{
-    console.log("...create a new document!");
+    console.log("...create a new Book Data!");
     const client = new MongoClient(mongourl);
     client.connect((err)=>{
         assert.equal(null, err);
@@ -244,11 +244,10 @@ var objectId = new ObjectID(timestamp);
         DOC['name']= req.fields.name;
         DOC['Isbn']= req.fields.Isbn;
         DOC['quantity']= req.fields.quantity;
-        DOC['owner']= `${req.session.userid}`;
         console.log("...putting data into DOC");
         DOC['Publisher'] = req.fields.Publisher;
 		DOC['Brief_Synopsis'] = req.fields.Brief_Synopsis;
-        
+        DOC['creater']= `${req.session.userid}`;
         var pdoc = {};
         if (req.files.photo && req.files.photo.size > 0 && (pdoc['mimetype'] == 'image/jpeg' || pdoc['mimetype'] == 'image/png')) {
             fs.readFile(req.files.photo.path, (err, data) => {
@@ -261,22 +260,22 @@ var objectId = new ObjectID(timestamp);
         } 
         DOC['photo'] = pdoc;
         
-        if(DOC.name &&  DOC.owner){
-            console.log("...Creating the document");
+        if(DOC.name &&  DOC.creater){
+            console.log("...Creating the Book Data");
             createDocument(db, DOC, (docs)=>{
                 client.close();
                 console.log("Closed DB connection");
-                res.status(200).render('info', {message: "Document created successfully!"});
+                res.status(200).render('info', {message: "Book Data created successfully!"});
             });
         } else{
             client.close();
             console.log("Closed DB connection");
-            res.status(200).render('info', {message: "Invalid entry - Name & Owner is compulsory!"});
+            res.status(200).render('info', {message: "Invalid entry - Name & creater is compulsory!"});
         }
     });
     client.close();
     console.log("Closed DB connection");
-    res.status(200).render('info', {message: "Document created"}); 
+    res.status(200).render('info', {message: "Book Data created"}); 
 });
 
 app.get('/edit', (req, res)=>{
@@ -305,14 +304,14 @@ app.post('/update', (req, res)=>{
         client.connect((err) => {
             assert.equal(null, err);
             console.log("Connected successfully to server");
-            console.log("...checking owner");
+            console.log("...checking creater");
             
-            if(req.fields.owner == req.session.userid){
+            if(req.fields.creater == req.session.userid){
                 if(req.fields.name){
                 updateDOC['name']= req.fields.name;
                 updateDOC['inv_type']= req.fields.inv_type;
                 updateDOC['quantity']= req.fields.quantity;
-                updateDOC['owner']= `${req.session.userid}`;
+                updateDOC['creater']= `${req.session.userid}`;
                 var adoc ={};
                 adoc['building'] = req.fields.building;
 				adoc['country'] = req.fields.country;
@@ -335,28 +334,28 @@ app.post('/update', (req, res)=>{
                     updateDocument(DOCID, updateDOC, (docs) => {
                         client.close();
                         console.log("Closed DB connection");
-                        res.status(200).render('info', {message: "Document updated successfully!."});
+                        res.status(200).render('info', {message: "Book Data updated successfully!."});
                     });
                 }else{
                     updateDocument(DOCID, updateDOC, (docs) => {
                         client.close();
                         console.log("Closed DB connection");
-                        res.status(200).render('info', {message: "Document updated successfully!."});
+                        res.status(200).render('info', {message: "Book Data updated successfully!."});
                     });
                 }
             }else{
                 res.status(200).render('info', {message: "Invalid entry - Name is compulsory!"});}
               
     }else{
-                res.status(200).render('info', {message: "Invalid owner - Only the owner can update the page!"});
+                res.status(200).render('info', {message: "Invalid creater - Only the creater can update the page!"});
             }
     });
     
 });
 
 app.get('/delete', (req, res)=>{
-    if(req.session.userid == req.query.owner){
-        console.log("...hello owner of the document");
+    if(req.session.userid == req.query.creater){
+        console.log("...hello creater of the Book Data");
         handle_Delete(res, req.query);
     }else{
         res.status(200).render('info', {message: "Access denied - You don't have the access right!"}); 
