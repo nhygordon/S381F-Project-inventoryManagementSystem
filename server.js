@@ -17,12 +17,11 @@ const express = require('express');
 const app = express();
 const session = require('cookie-session');
 
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 const { Buffer } = require('safe-buffer');
 
 var users = new Array(
-    {name: "a", password: ""},
 	{name: "fl", password: ""},
     {name: "nhy", password: ""},
     {name: "ccy", password: ""}
@@ -33,7 +32,7 @@ app.set('view engine', 'ejs');
 app.use(formidable());
 
 //Middleware
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 //Cookie
 app.use(session({
     userid: "session",  
