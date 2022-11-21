@@ -306,43 +306,22 @@ app.post('/update', (req, res)=>{
             console.log("Connected successfully to server");
             console.log("...checking creater");
             
-            if(req.fields.creater == req.session.userid){
+            if(req.fields.owner == req.session.userid){
                 if(req.fields.name){
                 updateDOC['name']= req.fields.name;
-                updateDOC['inv_type']= req.fields.inv_type;
+                updateDOC['Isbn']= req.fields.Isbn;
                 updateDOC['quantity']= req.fields.quantity;
-                updateDOC['creater']= `${req.session.userid}`;
-                var adoc ={};
-                adoc['building'] = req.fields.building;
-				adoc['country'] = req.fields.country;
-                adoc['street'] = req.fields.street;
-                adoc['zipcode'] = req.fields.zipcode;
-                adoc['coord'] = [req.fields.latitude, req.fields.longitude];
-                updateDOC['address'] = adoc;
+                updateDOC['owner']= `${req.session.userid}`;
+                updateDOC['Publisher'] = req.fields.Publisher;
+		        updateDOC['Brief_Synopsis'] = req.fields.Brief_Synopsis;
                 var DOCID = {};
                 DOCID['_id'] = ObjectID(req.fields._id);
-                if (req.files.photo.size > 0) {
-                    var pdoc = {};
-                    fs.readFile(req.files.photo.path, (err, data) => {
-                        assert.equal(err,null);
-                        pdoc['title'] = req.fields.title;
-                        pdoc['data'] = new Buffer.from(data).toString('base64');
-                        pdoc['mimetype'] = req.files.photo.type;
-                            
+                updateDocument(DOCID, updateDOC, (docs) => {
+                    client.close();
+                    console.log("Closed DB connection");
+                    res.status(200).render('info', {message: "Book Data updated successfully!."});
                     });
-                    updateDOC['photo'] = pdoc;
-                    updateDocument(DOCID, updateDOC, (docs) => {
-                        client.close();
-                        console.log("Closed DB connection");
-                        res.status(200).render('info', {message: "Book Data updated successfully!."});
-                    });
-                }else{
-                    updateDocument(DOCID, updateDOC, (docs) => {
-                        client.close();
-                        console.log("Closed DB connection");
-                        res.status(200).render('info', {message: "Book Data updated successfully!."});
-                    });
-                }
+                
             }else{
                 res.status(200).render('info', {message: "Invalid entry - Name is compulsory!"});}
               
