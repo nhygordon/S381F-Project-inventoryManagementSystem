@@ -106,7 +106,7 @@ const handle_Find = (req, res, criteria) =>{
         findDocument(db, {}, (docs)=>{
             client.close();
             console.log("Closed DB connection.");
-            res.status(200).render('home', {name: `${req.session.userid}`, ninventory: docs.length, Library: docs});
+            res.status(200).render('home', {name: `${req.session.userid}`, num_book: docs.length, Library: docs});
         });
     });
 }
