@@ -3,8 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>inventory</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <title>GG Library</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -12,23 +11,43 @@
     <body>
         <div class="container-fluid text-left ">
             <div class="card bg-dark text-white">
-                <div class="card-body">Welcome, please login.</div>
+                <div class="card-body" style="color:blue; font-family:'Arial'; font-size:35px; background-color: powderblue;
+                padding: 25px;
+                background-size: auto;">Welcome to use GG library inventory, you can login to use.Thank you.</div>
             </div>
             <div class="well">
                 <form action="/login" method="post">
                     
-                        <label for="username">Username:</label>
+                        <label for="Username" style="color:red; font-family:'Courier New';">Account:&nbsp;</label>
                         
                             <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                            <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                            <input type="text" class="form-control" name="username" id="username" placeholder="Username" style="width: 30%;
+                        
+                            padding: 12px 20px;
+                            margin: 8px 0;
+                            box-sizing: border-box;">
                             <br>
                
-                        <label for="password">Password:</label>
-                     
+                        <label for="password" style="color:red; font-family:'Courier New';">Password:</label>
+                            
                             <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Password" style="width: 30%;
+                            padding: 12px 20px;
+                            margin: 8px 0;
+                            box-sizing: border-box;">
                     <br>
-                        <button type="submit" class="btn btn-primary">Login</button>
+                        <button type="submit" class="btn btn-primary" style="display: inline-block;
+                        background-color: #7b38d8;
+                        border-radius: 10px;
+                        border: 4px double #cccccc;
+                        color: #eeeeee;
+                        text-align: center;
+                        font-size: 28px;
+                        padding: 20px;
+                        width: 200px;
+                        transition: all 0.5s;
+                        cursor: pointer;
+                        margin: 5px;">Login</button>
                 </form>
             </div>
         </div>

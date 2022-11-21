@@ -14,7 +14,7 @@
     <body>
         <div class="jumbotron text-center">
             <h1>Update inventory : <%= Library.name %> </h1>
-            <p ></p>Owner: <%= Library.creater %></p><br>
+            <p ></p>Creator: <%= Library.creator %></p><br>
         </div>
         <div class="container-fluid text-left">
             <form action="/update" method="POST" enctype="multipart/form-data">
@@ -39,7 +39,7 @@
                 <input type="text" id="Brief_Synopsis" name="Brief_Synopsis" class="form-control" placeholder="Brief Synopsis"><br>
                 
                 <input type="hidden" name="_id" value=<%= Library._id %>>
-                <input type="hidden" name="owner" value=<%= Library.creater %>>
+                <input type="hidden" name="creator" value=<%= Library.creator %>>
 
                 <input type="submit" value="update">
             </form>

@@ -136,7 +136,7 @@ const handle_Delete = (res, criteria) =>{
 
         let DOCID = {};
         DOCID['_id'] = ObjectID(criteria._id);
-        DOCID['creater'] = criteria.creater;
+        DOCID['creator'] = criteria.creator;
         deleteDocument(db, DOCID, (results)=>{
             client.close();
             console.log("Closed DB connection");
@@ -247,7 +247,7 @@ var objectId = new ObjectID(timestamp);
         console.log("...putting data into DOC");
         DOC['Publisher'] = req.fields.Publisher;
 		DOC['Brief_Synopsis'] = req.fields.Brief_Synopsis;
-        DOC['creater']= `${req.session.userid}`;
+        DOC['creator']= `${req.session.userid}`;
         var pdoc = {};
         if (req.files.photo && req.files.photo.size > 0 && (pdoc['mimetype'] == 'image/jpeg' || pdoc['mimetype'] == 'image/png')) {
             fs.readFile(req.files.photo.path, (err, data) => {
@@ -260,7 +260,7 @@ var objectId = new ObjectID(timestamp);
         } 
         DOC['photo'] = pdoc;
         
-        if(DOC.name &&  DOC.creater){
+        if(DOC.name &&  DOC.creator){
             console.log("...Creating the Book Data");
             createDocument(db, DOC, (docs)=>{
                 client.close();
@@ -270,7 +270,7 @@ var objectId = new ObjectID(timestamp);
         } else{
             client.close();
             console.log("Closed DB connection");
-            res.status(200).render('info', {message: "Invalid entry - Name & creater is compulsory!"});
+            res.status(200).render('info', {message: "Invalid entry - Name & creator is compulsory!"});
         }
     });
     client.close();
@@ -304,14 +304,14 @@ app.post('/update', (req, res)=>{
         client.connect((err) => {
             assert.equal(null, err);
             console.log("Connected successfully to server");
-            console.log("...checking creater");
+            console.log("...checking creator");
             
-            if(req.fields.owner == req.session.userid){
+            if(req.fields.creator == req.session.userid){
                 if(req.fields.name){
                 updateDOC['name']= req.fields.name;
                 updateDOC['Isbn']= req.fields.Isbn;
                 updateDOC['quantity']= req.fields.quantity;
-                updateDOC['owner']= `${req.session.userid}`;
+                updateDOC['Creator']= `${req.session.userid}`;
                 updateDOC['Publisher'] = req.fields.Publisher;
 		        updateDOC['Brief_Synopsis'] = req.fields.Brief_Synopsis;
                 var DOCID = {};
@@ -326,15 +326,15 @@ app.post('/update', (req, res)=>{
                 res.status(200).render('info', {message: "Invalid entry - Name is compulsory!"});}
               
     }else{
-                res.status(200).render('info', {message: "Invalid creater - Only the creater can update the page!"});
+                res.status(200).render('info', {message: "Invalid creator - Only the creator can update the page!"});
             }
     });
     
 });
 
 app.get('/delete', (req, res)=>{
-    if(req.session.userid == req.query.creater){
-        console.log("...hello creater of the Book Data");
+    if(req.session.userid == req.query.creator){
+        console.log("...hello creator of the Book Data");
         handle_Delete(res, req.query);
     }else{
         res.status(200).render('info', {message: "Access denied - You don't have the access right!"}); 
