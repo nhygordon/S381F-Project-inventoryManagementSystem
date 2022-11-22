@@ -332,7 +332,6 @@ app.get('/delete', (req, res)=>{
 //Rest API
 //name
 app.get('/api/library/name/:name', function(req,res)  {
-    req.session.authenticated = true;
     console.log("...Rest Api");
 	console.log("name: " + req.params.name);
     if (req.params.name) {
