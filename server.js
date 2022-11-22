@@ -18,7 +18,7 @@ const app = express();
 const session = require('cookie-session');
 
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.urlencoded({ extended: true }));
 const { Buffer } = require('safe-buffer');
 
 var users = new Array(
@@ -29,10 +29,10 @@ var users = new Array(
 var DOC = {};
 //Main Body
 app.set('view engine', 'ejs');
-//app.use(formidable());
+app.use(formidable());
 
 //Middleware
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 //Cookie
 app.use(session({
     userid: "session",  
@@ -165,9 +165,9 @@ app.get('/login', (req, res)=>{
 app.post('/login', (req, res)=>{
     console.log("...Handling your login request");
     users.forEach((user) => {
-        if (user.name == req.body.username && user.password == req.body.password) {
+        if (user.name == req.fields.username && user.password == req.fields.password) {
         req.session.authenticated = true;
-        req.session.userid = req.body.username;
+        req.session.userid = req.fields.username;
         console.log(req.session.userid);
         res.status(200).redirect("/home");
         }
