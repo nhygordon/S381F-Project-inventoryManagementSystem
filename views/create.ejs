@@ -3,8 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Library</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <title>GG Library</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script>function goBack() { window.history.back();} </script>
@@ -12,37 +11,80 @@
     </head>
     <body>
         <div class="jumbotron text-center">
-            <h1>Add a new book</h1>
+            <h1 style="color:blue; font-family:'Arial'; font-size:35px; background-color: powderblue;
+            padding: 25px;
+            background-size: auto;">Add a new book</h1>
         </div>
         <div class="container-fluid text-left">
             <form action="/create" method="POST" enctype="multipart/form-data">
                 <!--the enctype attribute is required for a file upload control form-->
                 <!--the attribute is not encoding characters-->
-                <label for="name">Name*:</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Name"><br>
+                <label for="name" style="color:red; font-family:'Courier New';">Name*:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="Name" style="width: 30%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;"><br>
                 
-                <label for="Isbn">ISBN:</label>
-                <input type="text" id="Isbn" name="Isbn" class="form-control" placeholder="ISBN"><br>
+                <label for="Isbn" style="color:red; font-family:'Courier New';">ISBN:</label>
+                <input type="text" id="Isbn" name="Isbn" class="form-control" placeholder="ISBN" style="width: 30%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;"><br>
 
-                <label for="quantity">Quantity:</label>
-                <input type="text" id="quantity" name="quantity" class="form-control" placeholder="Quantity"><br>
+                <label for="quantity" style="color:red; font-family:'Courier New';">Quantity:</label>
+                <input type="text" id="quantity" name="quantity" class="form-control" placeholder="Quantity" style="width: 30%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;"><br>
                 
-                <label for="Author">Author:</label>
-                <input type="text" id="Author" name="Author" class="form-control" placeholder="Author"><br>
+                <label for="Author" style="color:red; font-family:'Courier New';">Author:</label>
+                <input type="text" id="Author" name="Author" class="form-control" placeholder="Author" style="width: 30%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;"><br>
 
-                <label for="Publisher">Publisher:</label>
-                <input type="text" id="Publisher" name="Publisher" class="form-control" placeholder="Publisher"><br>
+                <label for="Publisher" style="color:red; font-family:'Courier New';">Publisher:</label>
+                <input type="text" id="Publisher" name="Publisher" class="form-control" placeholder="Publisher" style="width: 30%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;"><br>
                 
-                <label for="Brief_Synopsis">Brief Synopsis:</label>
-                <input type="text" id="Brief_Synopsis" name="Brief_Synopsis" class="form-control" placeholder="Brief Synopsis"><br>
+                <label for="Brief_Synopsis" style="color:red; font-family:'Courier New';">Brief Synopsis:</label>
+                <input type="text" id="Brief_Synopsis" name="Brief_Synopsis" class="form-control" placeholder="Brief Synopsis" style="width: 30%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;"><br>
 
-                <div class="custom-file">
-                    <label class="custom-file-label" for="photo">Photo:</label>
+                <div class="custom-file" style="color:red; font-family:'Courier New';">
+                    <label class="custom-file-label" for="photo" style="color:red; font-family:'Courier New';">Photo:</label>
                     <input type="file" id="photo" name="photo" class="form-control custom-file-input" placeholder="Please upload JPEG/PNG format"><br>
                 </div>
 
-                <input type="submit" value="Create">
-                <button class="btn btn-primary" onclick="goBack()">Back</button>
+                <input type="submit" value="Create" style="display: inline-block;
+                background-color: #00FF00;
+                border-radius: 10px;
+                border: 4px double #cccccc;
+                color: #000000;
+                text-align: center;
+                font-size: 28px;
+                padding: 20px;
+                width: 200px;
+                transition: all 0.5s;
+                cursor: pointer;
+                margin: 5px;">
+                
+                <button class="btn btn-primary" onclick="goBack()" style="display: inline-block;
+                background-color: #7b38d8;
+                border-radius: 10px;
+                border: 4px double #000000;
+                color: #eeeeee;
+                text-align: center;
+                font-size: 28px;
+                padding: 20px;
+                width: 200px;
+                transition: all 0.5s;
+                cursor: pointer;
+                margin: 5px;">Back</button>
 
             </form>
         </div>

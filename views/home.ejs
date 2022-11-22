@@ -3,28 +3,56 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>inventorys</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <title>GG Library</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     </head>
     <body>
         <div class="jumbotron text-center">
-            <h1>Hello! user: <%= name %></h1>
-           <p>Showing all <%= num_book %> Books.</p>
+            <h1 style="color:blue; font-family:'Arial'; font-size:35px; background-color: powderblue;
+            padding: 25px;
+            background-size: auto;">Hello! user: <%= name %></h1>
+           <p style="color:blue; font-family:'Arial'; font-size:15px; 
+           padding: 15px;">Showing all <%= num_book %> Books.</p>
         </div>
         <div class="container-fluid">
             <div class="row ml-md-auto">
-                <a href="/logout" class="btn btn-primary pull-right" role="button">Log out :)</a>
-                <a href="/create" class="btn btn-primary" role="button">Create new Books Data</a>
+                <a href="/logout" class="btn btn-primary pull-right" role="button" style="display: inline-block;
+                background-color: #7b38d8;
+                border-radius: 10px;
+                border: 4px double #cccccc;
+                color: #eeeeee;
+                text-align: center;
+                font-size: 28px;
+                padding: 20px;
+                width: 200px;
+                transition: all 0.5s;
+                cursor: pointer;
+                margin: 1px;">Log out</a>
+                <a href="/create" class="btn btn-primary" role="button" style="display: inline-block;
+                background-color: #7b38d8;
+                border-radius: 10px;
+                border: 4px double #cccccc;
+                color: #eeeeee;
+                text-align: center;
+                font-size: 28px;
+                padding: 20px;
+                width: 200px;
+                transition: all 0.5s;
+                cursor: pointer;
+                margin: 5px;">Create new Books Data</a>
             </div>
             <br>
             <div class="row">
-                <p>Search Books name:
-                <label for="bar"><span class="glyphicon glyphicon-search"></span></label><input style="width:100%" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search name:" name="bar"><br></p>
-                <table id="myTable" class="table table-striped table-bordered table-hover table-scroll">
-                    <thead ><tr class="table-primary"><th>Books Name</th></tr></thead>
-                    <tbody style='height:300px;display:block;overflow:scroll'>
+                <p style="color:red; font-family:'Courier New';">Search Books name:
+                <label for="bar"><span class="glyphicon glyphicon-search"></span></label><input style="width: 30%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                box-sizing: border-box;" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search book:" name="bar" ><br></p>
+                <table id="myTable" class="table table-striped table-bordered table-hover table-scroll" style="border: 1px solid black;">
+                    <thead ><tr class="table-primary" style="color:blue; font-family:'Arial'; font-size:15px; 
+                        padding: 15px;"><th>Books Name</th></tr></thead>
+                    <tbody style='height:300px;display:block;overflow:scroll;'>
                         <% for (var r of Library) {%>
                             <tr>
                                 <td><a href="/details?_id=<%= r._id %>"><%= r.name %></a></td>
@@ -35,7 +63,7 @@
                     </tbody>
                 </table>
             </div>
-            <p>This is the end of the page ;)</p>
+
         </div>
         <script>
         $(document).ready(function(){
