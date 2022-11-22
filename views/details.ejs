@@ -7,7 +7,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <script>
-        function goBack() { window.history.back();}
+            function Back() { window.history.back();}
         </script>
         <style>
             img {
@@ -24,11 +24,7 @@
         </div>
         <div class="container-fluid">
             <div class="well">
-            <div class="row">
-                <% if (Library.photo) { %>
-                    <img src="data:image/<%= Library.photo.mimetype %>;base64, <%= Library.photo.data %>"><br>
-                <% } %>
-            </div>
+
             <div class="row">
                     <p style="color:red; font-family:'Courier New';">Name:  <% if (typeof (Library.name) !== "undefined") { %><%= Library.name %><% } %></p><br>
                     <p style="color:red; font-family:'Courier New';">ISBN:  <% if (typeof (Library.Isbn) !== "undefined") { %><%= Library.Isbn %><% } %></p><br>
@@ -36,7 +32,7 @@
                     <p style="color:red; font-family:'Courier New';">Publisher:  <% if (typeof (Library.Publisher) !== "undefined") { %><%= Library.Publisher %><% } %></p><br>
                     <p style="color:red; font-family:'Courier New';">Brief Synopsis:  <% if (typeof (Library.Brief_Synopsis) !== "undefined") { %><%= Library.Brief_Synopsis %><% } %></p><br>
                    
-                <p style="color:red; font-family:'Courier New';">Creater: <%= Library.creater %></p><br>
+                <p style="color:red; font-family:'Courier New';">Creator: <%= Library.creator %></p><br>
                 
 
             </div>
@@ -55,7 +51,7 @@
                     transition: all 0.5s;
                     cursor: pointer;
                     margin: 5px;">Edit</a>
-                <a href="/delete?_id=<%= Library._id %>&owner=<%= Library.owner %>" class="btn btn-primary" role="button" style="display: inline-block;
+                <a href="/delete?_id=<%= Library._id %>&creator=<%= Library.creator %>" class="btn btn-primary" role="button" style="display: inline-block;
                     background-color: #FF0000;
                     border-radius: 10px;
                     border: 4px double #000000;
@@ -68,7 +64,7 @@
                     cursor: pointer;
                     margin: 5px;">Delete</a>
                 
-                <button class="btn btn-primary" onclick="goBack()" style="display: inline-block;
+                <button class="btn btn-primary" onclick="Back()" style="display: inline-block;
                 background-color: #7b38d8;
                 border-radius: 10px;
                 border: 4px double #000000;

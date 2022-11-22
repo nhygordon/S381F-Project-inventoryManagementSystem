@@ -248,17 +248,6 @@ var objectId = new ObjectID(timestamp);
         DOC['Publisher'] = req.fields.Publisher;
 		DOC['Brief_Synopsis'] = req.fields.Brief_Synopsis;
         DOC['creator']= `${req.session.userid}`;
-        var pdoc = {};
-        if (req.files.photo && req.files.photo.size > 0 && (pdoc['mimetype'] == 'image/jpeg' || pdoc['mimetype'] == 'image/png')) {
-            fs.readFile(req.files.photo.path, (err, data) => {
-                assert.equal(err,null);
-                pdoc['title'] = req.fields.title;
-                pdoc['data'] = new Buffer.from(data).toString('base64');
-                pdoc['mimetype'] = req.files.photo.type;
-                    
-            });
-        } 
-        DOC['photo'] = pdoc;
         
         if(DOC.name &&  DOC.creator){
             console.log("...Creating the Book Data");
