@@ -22,9 +22,9 @@ const bodyParser = require('body-parser');
 const { Buffer } = require('safe-buffer');
 
 var users = new Array(
-	{name: "fl", password: ""},
+	{name: "fl", password: "fl"},
     {name: "nhy", password: ""},
-    {name: "ccy", password: ""}
+    {name: "ccy", password: "ccy"}
 );
 var DOC = {};
 //Main Body
@@ -330,15 +330,56 @@ app.get('/delete', (req, res)=>{
     }
 });
 
+//
+// RESTful
+//
 
-//Rest API
-//name
-app.get('/api/Library/name/:name', function(req,res)  {
-    console.log("...Rest Api");
-	console.log("name: " + req.params.name);
-    if (req.params.name) {
+/*  CREATE
+curl -X POST -H "Content-Type: application/json" --data '{"Isbn":"BK999","quantity":"00000000"}' localhost:8099/api/Isbn/BK999
+
+curl -X POST -F 'Isbn=BK999' -F "filetoupload=@image.png" localhost:8099/api/Isbn/BK999
+*/
+app.post('/api/Isbn/:Isbn', (req,res) => {
+    if (req.params.Isbn) {
+        console.log(req.body)
+        const client = new MongoClient(mongourl);
+        client.connect((err) => {
+            assert.equal(null,err);
+            console.log("Connected successfully to server");
+            const db = client.db(dbName);
+            let newDoc = {};
+            newDoc['Isbn'] = req.fields.Isbn;
+            newDoc['quantity'] = req.fields.quantity;
+            if (req.files.filetoupload && req.files.filetoupload.size > 0) {
+                fs.readFile(req.files.filetoupload.path, (err,data) => {
+                    assert.equal(err,null);
+                    newDoc['photo'] = new Buffer.from(data).toString('base64');
+                    db.collection('Library').insertOne(newDoc,(err,results) => {
+                        assert.equal(err,null);
+                        client.close()
+                        res.status(200).end()
+                    })
+                });
+            } else {
+                db.collection('Library').insertOne(newDoc,(err,results) => {
+                    assert.equal(err,null);
+                    client.close()
+                    res.status(200).end()
+                })
+            }
+        })
+    } else {
+        res.status(500).json({"error": "missing Isbn"});
+    }
+})
+
+/* READ
+curl -X GET http://localhost:8099/api/Isbn/BK001
+*/
+app.get('/api/Isbn/:Isbn', (req,res) => {
+    if (req.params.Isbn) {
         let criteria = {};
-        criteria['name'] = req.params.name;
+        criteria['Isbn'] = req.params.Isbn;
         const client = new MongoClient(mongourl);
         client.connect((err) => {
             assert.equal(null, err);
@@ -352,32 +393,83 @@ app.get('/api/Library/name/:name', function(req,res)  {
             });
         });
     } else {
-        res.status(500).json({"error": "missing name"});
+        res.status(500).json({"error": "missing Isbn"});
     }
-});
-///inv_type
-app.get('/api/Library/inv_type/:inv_type', (req,res) => {
-    console.log("...Rest Api");
-	console.log("inv_type: " + req.params.inv_type);
-    if (req.params.inv_type) {
+})
+
+
+/*  UPDATE
+curl -X PUT -H "Content-Type: application/json" --data '{"quantity":"88888888"}' localhost:8099/api/Isbn/yhn
+
+curl -X PUT -F "quantity=99999999" localhost:8099/api/Isbn/yhn 
+*/
+app.put('/api/Isbn/:Isbn', (req,res) => {
+    console.log(req.params.Isbn);
+    if (req.params.Isbn) {
+        console.log(req.body)
+        const client = new MongoClient(mongourl);
+        client.connect((err) => {
+            assert.equal(null,err);
+            console.log("Connected successfully to server");
+            const db = client.db(dbName);
+
+            let criteria = {}
+            criteria['Isbn'] = req.params.Isbn
+
+            let updateDoc = {};
+            Object.keys(req.fields).forEach((key) => {
+                updateDoc[key] = req.fields[key];
+            })
+            console.log(updateDoc)
+            if (req.files.filetoupload && req.files.filetoupload.size > 0) {
+                fs.readFile(req.files.filetoupload.path, (err,data) => {
+                    assert.equal(err,null);
+                    newDoc['photo'] = new Buffer.from(data).toString('base64');
+                    db.collection('Library').updateOne(criteria, {$set: updateDoc},(err,results) => {
+                        assert.equal(err,null);
+                        client.close()
+                        res.status(200).end()
+                    })
+                });
+            } else {
+                db.collection('Library').updateOne(criteria, {$set: updateDoc},(err,results) => {
+                    assert.equal(err,null);
+                    client.close()
+                    res.status(200).end()
+                })
+            }
+        })
+    } else {
+        res.status(500).json({"error": "missing Isbn"});
+    }
+})
+
+/*  DELETE
+curl -X DELETE localhost:8099/api/Isbn/BK999
+*/
+app.delete('/api/Isbn/:Isbn', (req,res) => {
+    if (req.params.Isbn) {
         let criteria = {};
-        criteria['inv_type'] = req.params.inv_type;
+        criteria['Isbn'] = req.params.Isbn;
         const client = new MongoClient(mongourl);
         client.connect((err) => {
             assert.equal(null, err);
             console.log("Connected successfully to server");
             const db = client.db(dbName);
 
-            findDocument(db, criteria, (docs) => {
-                client.close();
-                console.log("Closed DB connection");
-                res.status(200).json(docs);
-            });
+            db.collection('Library').deleteMany(criteria,(err,results) => {
+                assert.equal(err,null)
+                client.close()
+                res.status(200).end();
+            })
         });
     } else {
-        res.status(500).json({"error": "missing inv_type"});
+        res.status(500).json({"error": "missing Isbn"});       
     }
-});
+})
+//
+// End of Restful
+//
 
 app.get('/*', (req, res)=>{
     res.status(404).render("info", {message: `${req.path} - Unknown request!`})
