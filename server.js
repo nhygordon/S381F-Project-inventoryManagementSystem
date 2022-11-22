@@ -240,7 +240,6 @@ var objectId = new ObjectID(timestamp);
 
 	DOC["_id"] = objectId;
 
-        DOC['inv_id']= "";
         DOC['name']= req.fields.name;
         DOC['Isbn']= req.fields.Isbn;
         DOC['quantity']= req.fields.quantity;
